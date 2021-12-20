@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Stage 1</title>
+</head>
+<body>
+  <script src="module-a.js"></script>
+  <script src="module-b.js"></script>
+  <script>
+    // 直接使用全局成员
+    foo() // 可能存在命名冲突
+    console.log(data)
+    data = 'other' // 数据可能会被修改
+  </script>
+</body>
+</html>
