@@ -1,6 +1,7 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const RemoveCommentsPlugin = require('./plugin/remove-comments-plugin')
 const path = require('path');
 
 module.exports = {
@@ -50,6 +51,7 @@ module.exports = {
           to: path.resolve(__dirname, "./../dist/assets"),
         },
       ],
-    })
+    }),
+    // new RemoveCommentsPlugin()
   ]
 }
