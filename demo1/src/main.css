@@ -1,0 +1,8 @@
+body {
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 800px;
+  background: #f4f8fb;
+}
+/* console.log('This is a style sheet.') */
+/* 只是为了证明 Webpack 默认按照 JS 语法解析模块 */
