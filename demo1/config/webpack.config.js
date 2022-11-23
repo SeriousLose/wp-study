@@ -1,9 +1,15 @@
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const path = require('path');
+
 module.exports = {
   // 样式文件路径
   entry: './index.js',
   mode: 'none',
   output: {
-    filename: 'bundle.js'
+    filename: 'build.js',   // 输出文件名称
+    path: path.resolve(__dirname, './../dist/'),  //获取输出路径
   },
   module: {
     rules: [
@@ -23,5 +29,27 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Webpack Plugin SeriousLose',
+      meta: {
+        viewport: 'width=device-width'
+      },
+      template: './src/index.html'
+    }),
+    // 用于生成 about.html
+    // new HtmlWebpackPlugin({
+    //   filename: 'about.html'
+    // }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "../src/assets"),
+          to: path.resolve(__dirname, "./../dist/assets"),
+        },
+      ],
+    })
+  ]
 }
