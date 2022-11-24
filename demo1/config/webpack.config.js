@@ -3,6 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const RemoveCommentsPlugin = require('./plugin/remove-comments-plugin')
 const path = require('path');
+const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserWebpackPlugin = require('terser-webpack-plugin')
 
 const allModes = [
   'eval',
@@ -34,7 +38,8 @@ module.exports = allModes.map(item => ({
       {
         test: /\.css$/, // 根据打包过程中所遇到文件路径匹配是否使用这个 loader
         use: [
-          'style-loader',
+          // 'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader', // 指定具体的 loader
         ]
       },
@@ -70,5 +75,18 @@ module.exports = allModes.map(item => ({
     //   ],
     // }),
     // new RemoveCommentsPlugin()
-  ]
+
+    new webpack.DefinePlugin({
+      // 值要求的是一个代码片段
+      API_BASE_URL: '"https://api.example.com"'
+    }),
+    new MiniCssExtractPlugin(),
+    // new OptimizeCssAssetsWebpackPlugin()
+  ],
+  optimization: {
+    minimizer: [
+      new TerserWebpackPlugin(),
+      new OptimizeCssAssetsWebpackPlugin()
+    ]
+  }
 }))
