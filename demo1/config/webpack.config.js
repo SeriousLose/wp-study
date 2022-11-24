@@ -4,14 +4,31 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const RemoveCommentsPlugin = require('./plugin/remove-comments-plugin')
 const path = require('path');
 
-module.exports = {
+const allModes = [
+  'eval',
+  'eval-cheap-source-map',
+  // 'cheap-module-eval-source-map',
+  // 'eval-source-map',
+  // 'cheap-source-map',
+  // 'cheap-module-source-map',
+  // 'inline-cheap-source-map',
+  // 'inline-cheap-module-source-map',
+  // 'source-map',
+  // 'inline-source-map',
+  // 'hidden-source-map',
+  // 'nosources-source-map'
+]
+
+module.exports = allModes.map(item => ({
   // 样式文件路径
   entry: './index.js',
   mode: 'none',
+  devtool: `${item}`,
   output: {
-    filename: 'build.js',   // 输出文件名称
+    filename: `${item}.js`,   // 输出文件名称
     path: path.resolve(__dirname, './../dist/'),  //获取输出路径
   },
+  // devtool: item,
   module: {
     rules: [
       {
@@ -34,7 +51,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'Webpack Plugin SeriousLose',
+      filename: `${item}.html`,
       meta: {
         viewport: 'width=device-width'
       },
@@ -44,14 +61,14 @@ module.exports = {
     // new HtmlWebpackPlugin({
     //   filename: 'about.html'
     // }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, "../src/assets"),
-          to: path.resolve(__dirname, "./../dist/assets"),
-        },
-      ],
-    }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     {
+    //       from: path.resolve(__dirname, "../src/assets"),
+    //       to: path.resolve(__dirname, "./../dist/assets"),
+    //     },
+    //   ],
+    // }),
     // new RemoveCommentsPlugin()
   ]
-}
+}))
